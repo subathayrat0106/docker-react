@@ -1,0 +1,14 @@
+name: Deploy Frontend
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker login -u subat0106@gmail.com -p ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker build -t subathayrat/react-test -f Dockerfile.dev .
+      - run: docker run -e CI=true subathayrat/react-test npm test
